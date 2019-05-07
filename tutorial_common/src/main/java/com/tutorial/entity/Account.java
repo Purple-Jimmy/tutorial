@@ -1,5 +1,6 @@
 package com.tutorial.entity;
 
+import com.tutorial.anno.valid.CustomValidator;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -30,7 +31,7 @@ public class Account implements Serializable {
     private String userName;
 
     //@Size(min=6,max=10)
-    //@CustomValidator(values = "1,2,3")
+    @CustomValidator(values = "1,2,3")
     private String password;
 
     private String email;

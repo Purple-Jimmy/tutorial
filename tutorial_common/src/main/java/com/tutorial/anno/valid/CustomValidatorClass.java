@@ -26,7 +26,7 @@ public class CustomValidatorClass implements ConstraintValidator<CustomValidator
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext constraintValidatorContext) {
         String[] strArray = values.split(",");
-        Boolean flag = false;
+        boolean flag = false;
         //遍历比对有效值
         for(int i=0;i<strArray.length;i++){
             if(strArray[i].equals(value)){
