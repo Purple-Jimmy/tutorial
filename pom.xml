@@ -22,6 +22,7 @@
     <module>tutorial_netty</module>
     <module>tutorial_websocket</module>
     <module>tutorial_multi_datasource</module>
+      <module>tutorial_jwt</module>
   </modules>
   <name>tutorial</name>
   <packaging>pom</packaging>
