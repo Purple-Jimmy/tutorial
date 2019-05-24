@@ -23,6 +23,7 @@
     <module>tutorial_websocket</module>
     <module>tutorial_multi_datasource</module>
       <module>tutorial_jwt</module>
+      <module>tutorial_pulsar</module>
   </modules>
   <name>tutorial</name>
   <packaging>pom</packaging>

@@ -64,6 +64,85 @@ OAuth2用在使用第三方账号登录的情况(比如使用weibo, qq, github�
 
 
 
+1. 实时上报定位信息，实时地图展现
+根据人员上报的定位信息，实时的在地图上展现，延时在2s内
+
+2. 设置异常级别，异常提醒
+根据出现的异常情况，实时短信提醒或其他方式提醒(硬件设备鸣叫，闪红灯等等)
+
+
+3. 车辆进出登记
+实现车辆的车牌识别，出入的自动登记
+
+
+4. 数据统计分析
+根据记录的信息进行实时统计分析(异常次数,车辆来访次数等)
+
+
+
+
+@Configuration
+public class RestTemplateConfig {
+    @Bean
+    public RestTemplate restTemplate() {
+        SimpleClientHttpRequestFactory requestFactory = new SimpleClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(60000);
+        requestFactory.setReadTimeout(60000);
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+        List<HttpMessageConverter<?>> list = restTemplate.getMessageConverters();
+        for (HttpMessageConverter<?> httpMessageConverter : list) {
+            if (httpMessageConverter instanceof StringHttpMessageConverter) {
+                ((StringHttpMessageConverter) httpMessageConverter).setDefaultCharset(Charset.forName("UTF-8"));
+            }
+        }
+        return restTemplate;
+    }
+}
+
+
+ExecutorService exec = new ThreadPoolExecutor(1, psIdsList.size(),
+        60L, TimeUnit.SECONDS,
+        new SynchronousQueue<Runnable>()
+);
+for (int i = 0; i < psIdsList.size(); i++)
+{
+    final List<Long> processList = new ArrayList<>();
+    processList.addAll(psIdsList.get(i));
+    Runnable task = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            try
+            {
+                batchProcess(epgGroup,processList,catgIdList, mongoChargeInfoMap,quoteEpgGroupId);
+            }
+            catch (Exception e)
+            {
+                log.error("MongoEpgGroupPsServiceImpl--execCalc--error:", e);
+            }
+        }
+    };
+    exec.submit(task);
+}
+exec.shutdown();
+while (true)
+{
+    if (exec.isTerminated())
+    {
+        break;
+    }
+    try
+    {
+        Thread.sleep(1000);
+    }
+    catch (Exception e)
+    {
+        //ignore
+        break;
+    }
+
+}
 
 
 
