@@ -5,10 +5,6 @@
 <configuration status="info">
     <!--常量引用 -->
     <properties>
-        <!--日志文件保存路径-->
-        <Property name="LOG_PATH">./logs/</Property>
-        <!--日志名称-->
-        <Property name="LOG_NAME">springboot</Property>
         <!-- 文件输出格式 -->
         <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} |-%-5level [%thread] %c [%L] [ LOGID:%X{logId} ]-| %msg%n</property>
     </properties>
@@ -22,13 +18,13 @@
 
 
         <!--append:false 这个log每次运行程序会自动清空-->
-        <File name="autoClearLogFile" fileName="${LOG_PATH}/autoClearLog.log" append="false">
+        <File name="autoClearLogFile" fileName="./logs/autoClearLog.log" append="false">
             <PatternLayout pattern="${PATTERN}"/>
         </File>
 
         <!--info日志-->
-        <RollingFile name="springBootFile" fileName="${LOG_PATH}/${LOG_NAME}.log"
-                     filePattern="${LOG_PATH}/${LOG_NAME}_%d{yyyy-MM-dd}.log.gz">
+        <RollingFile name="springBootFile" fileName="./logs/elasticsearch.log"
+                     filePattern="./logs/elasticsearch_%d{yyyy-MM-dd}.log.gz">
             <!--控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch)-->
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${PATTERN}"/>
@@ -39,8 +35,8 @@
         </RollingFile>
 
         <!--error日志-->
-        <RollingFile name="springBootErrorFile" fileName="${LOG_PATH}/${LOG_NAME}Error.log"
-                     filePattern="${LOG_PATH}/${LOG_NAME}Error_%d{yyyy-MM-dd}.log.gz">
+        <RollingFile name="springBootErrorFile" fileName="./logs/elasticsearchError.log"
+                     filePattern="./logs/elasticsearchError_%d{yyyy-MM-dd}.log.gz">
             <!--控制台只输出level及以上级别的信息(onMatch),其他的直接拒绝(onMismatch)-->
             <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
             <PatternLayout pattern="${PATTERN}"/>
