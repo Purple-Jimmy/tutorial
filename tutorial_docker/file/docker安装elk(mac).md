@@ -37,11 +37,26 @@ sudo docker exec -it 2df4237ffe01 sh
 ```
 docker restart es
 ```
+9. 查看容器日志
+```
+docker logs 容器id
+```
+10. 查看容器ip地址
+```
+docker inspect 容器id
+```
 
 ## 安装kibana
 1. 运行
+
+docker run -d -p 5601:5601 --link elasticsearch -e ELASTICSEARCH_URL=http://elasticsearch:9200 kibana
+ 
 ```
-docker run -d -p 5601:5601 --name kibana 3e581a516dcd
+docker run -it -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:elasticsearch kibana
+--network 指定容器共享elasticsearch容器的网络栈 (使用了--network 就不能使用-p 来暴露端口)
+
+
+docker run -d -p 5601:5601 --name k3 3e581a516dcd
 docker run -it -d -e ELASTICSEARCH_URL=http://127.0.0.1:9200 --name kibana --network=container:elasticsearch 3e581a516dcd
 docker run -d --network mynetwork -e ELASTICSEARCH_URL=http://elasticsearch_2_4:9200 -p 5601:5601 kibana:4.6
 ```
